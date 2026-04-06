@@ -1,0 +1,28 @@
+name: chess_analytics
+version: '1.0.0'
+config-version: 2
+
+profile: chess_analytics
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  chess_analytics:
+    staging:
+      +materialized: view
+      +dataset: chess_staging
+    intermediate:
+      +materialized: view
+      +dataset: chess_staging
+    marts:
+      +materialized: table
+      +dataset: chess_marts
