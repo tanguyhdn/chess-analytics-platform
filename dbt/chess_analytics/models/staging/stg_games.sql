@@ -25,6 +25,8 @@ renamed as (
     select
         -- Clé naturelle
         game_url,
+        -- PGN complet de la partie
+        pgn,
 
         -- Joueur suivi
         lower(username)                                    as username,

@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: mart_player_stats
+    description: "Table finale des statistiques par joueur — consommée par le dashboard"
+    columns:
+      - name: username
+        description: "Username du joueur — clé primaire"
+        tests:
+          - not_null
+          - unique
+
+      - name: full_name
+        description: "Nom complet du joueur"
+
+      - name: title
+        description: "Titre FIDE : GM, IM..."
+
+      - name: peak_rating
+        description: "Meilleur rating toutes catégories"
+        tests:
+          - not_null
+
+      - name: total_games_all
+        description: "Total de parties toutes catégories"
+        tests:
+          - not_null
+
+      - name: total_wins_all
+        description: "Total de victoires toutes catégories"
+        tests:
+          - not_null
+
+  - name: mart_opening_analysis
+    description: "Analyse des ouvertures par joueur, couleur et format de jeu"
+    columns:
+      - name: username
+        description: "Username du joueur"
+        tests:
+          - not_null
+
+      - name: opening_slug
+        description: "Nom de l'ouverture extrait du PGN"
+        tests:
+          - not_null
+
+      - name: total_games
+        description: "Nombre de parties jouées avec cette ouverture"
+        tests:
+          - not_null
+
+      - name: win_rate_pct
+        description: "Taux de victoire avec cette ouverture"
+        tests:
+          - not_null
+
+  - name: mart_elo_progression
+    description: "Évolution du rating ELO par joueur et par jour"
+    columns:
+      - name: username
+        description: "Username du joueur"
+        tests:
+          - not_null
+
+      - name: time_class
+        description: "Format de jeu"
+        tests:
+          - not_null
+
+      - name: game_date
+        description: "Date de la partie"
+        tests:
+          - not_null
+
+      - name: closing_rating
+        description: "Rating en fin de journée"
+        tests:
+          - not_null

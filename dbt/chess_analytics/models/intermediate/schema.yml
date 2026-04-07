@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: int_player_performance
+    description: "Agrégation des performances par joueur et format de jeu"
+    columns:
+      - name: username
+        description: "Username du joueur"
+        tests:
+          - not_null
+
+      - name: time_class
+        description: "Format de jeu : rapid, blitz, bullet"
+        tests:
+          - not_null
+
+      - name: total_games
+        description: "Nombre total de parties jouées"
+        tests:
+          - not_null
+
+      - name: win_rate_pct
+        description: "Pourcentage de victoires"
+        tests:
+          - not_null
+
+      - name: avg_rating
+        description: "Rating ELO moyen sur la période"
+        tests:
+          - not_null
+
+      - name: max_rating
+        description: "Rating ELO maximum atteint"
+        tests:
+          - not_null
