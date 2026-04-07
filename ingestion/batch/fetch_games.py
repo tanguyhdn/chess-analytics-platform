@@ -82,23 +82,24 @@ def transform_game(game: dict, username: str) -> dict:
 def create_table_if_not_exists():
     """Crée la table raw_games si elle n'existe pas."""
     schema = [
-        bigquery.SchemaField("game_url",       "STRING"),
-        bigquery.SchemaField("username",        "STRING"),
-        bigquery.SchemaField("time_class",      "STRING"),
-        bigquery.SchemaField("time_control",    "STRING"),
-        bigquery.SchemaField("rated",           "BOOL"),
-        bigquery.SchemaField("pgn",             "STRING"),
-        bigquery.SchemaField("white_username",  "STRING"),
-        bigquery.SchemaField("white_rating",    "INTEGER"),
-        bigquery.SchemaField("white_result",    "STRING"),
-        bigquery.SchemaField("black_username",  "STRING"),
-        bigquery.SchemaField("black_rating",    "INTEGER"),
-        bigquery.SchemaField("black_result",    "STRING"),
-        bigquery.SchemaField("end_time",        "INTEGER"),
-        bigquery.SchemaField("ingested_at",     "STRING"),
+        bigquery.SchemaField("game_url",      "STRING"),
+        bigquery.SchemaField("username",       "STRING"),
+        bigquery.SchemaField("time_class",     "STRING"),
+        bigquery.SchemaField("time_control",   "STRING"),
+        bigquery.SchemaField("rated",          "BOOL"),
+        bigquery.SchemaField("pgn",            "STRING"),
+        bigquery.SchemaField("white_username", "STRING"),
+        bigquery.SchemaField("white_rating",   "INTEGER"),
+        bigquery.SchemaField("white_result",   "STRING"),
+        bigquery.SchemaField("black_username", "STRING"),
+        bigquery.SchemaField("black_rating",   "INTEGER"),
+        bigquery.SchemaField("black_result",   "STRING"),
+        bigquery.SchemaField("end_time",       "INTEGER"),
+        bigquery.SchemaField("ingested_at",    "STRING"),
     ]
 
     table = bigquery.Table(TABLE_ID, schema=schema)
+    table.clustering_fields = ["username", "time_class"]
     table = client.create_table(table, exists_ok=True)
     print(f"Table {TABLE_ID} prête.")
 
@@ -133,7 +134,7 @@ def load_to_bigquery(rows: list, username: str, year: str, month: str):
             bigquery.SchemaField("end_time",       "INTEGER"),
             bigquery.SchemaField("ingested_at",    "STRING"),
         ],
-        write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+        write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
     )
 
     with open(tmp_file, "rb") as f:

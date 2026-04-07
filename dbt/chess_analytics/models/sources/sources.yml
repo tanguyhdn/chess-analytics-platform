@@ -1,0 +1,72 @@
+version: 2
+
+sources:
+  - name: chess_raw
+    database: chess-analytics-platform
+    schema: chess_raw
+    description: "Raw zone — données brutes ingérées depuis Chess.com PubAPI"
+
+    config:
+      freshness:
+        warn_after: {count: 24, period: hour}
+        error_after: {count: 48, period: hour}
+      loaded_at_field: ingested_at
+
+    tables:
+      - name: raw_games
+        description: "Parties brutes des top joueurs Chess.com"
+        columns:
+          - name: game_url
+            description: "URL unique de la partie — clé naturelle"
+          - name: username
+            description: "Username du joueur suivi"
+          - name: time_class
+            description: "Format de jeu : rapid, blitz, bullet"
+          - name: time_control
+            description: "Contrôle du temps ex: 600 = 10 minutes"
+          - name: rated
+            description: "Partie classée ou non"
+          - name: pgn
+            description: "Notation PGN complète de la partie"
+          - name: white_username
+            description: "Username du joueur avec les blancs"
+          - name: white_rating
+            description: "Rating ELO du joueur avec les blancs"
+          - name: white_result
+            description: "Résultat du joueur blanc : win, lose, draw..."
+          - name: black_username
+            description: "Username du joueur avec les noirs"
+          - name: black_rating
+            description: "Rating ELO du joueur avec les noirs"
+          - name: black_result
+            description: "Résultat du joueur noir : win, lose, draw..."
+          - name: end_time
+            description: "Timestamp Unix de fin de partie"
+          - name: ingested_at
+            description: "Timestamp d'ingestion par le pipeline"
+
+      - name: raw_players
+        description: "Profils et ratings des joueurs suivis"
+        columns:
+          - name: username
+            description: "Username Chess.com — clé naturelle"
+          - name: player_id
+            description: "ID interne Chess.com"
+          - name: title
+            description: "Titre FIDE : GM, IM, FM..."
+          - name: name
+            description: "Nom complet du joueur"
+          - name: country
+            description: "Code pays ISO : FR, NO, US..."
+          - name: followers
+            description: "Nombre de followers Chess.com"
+          - name: is_streamer
+            description: "Le joueur streame-t-il sur Twitch/YouTube"
+          - name: rapid_rating
+            description: "Rating ELO Rapid actuel"
+          - name: blitz_rating
+            description: "Rating ELO Blitz actuel"
+          - name: bullet_rating
+            description: "Rating ELO Bullet actuel"
+          - name: ingested_at
+            description: "Timestamp d'ingestion par le pipeline"

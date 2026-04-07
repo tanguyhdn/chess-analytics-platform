@@ -19,10 +19,7 @@ models:
   chess_analytics:
     staging:
       +materialized: view
-      +dataset: chess_staging
     intermediate:
       +materialized: view
-      +dataset: chess_staging
     marts:
       +materialized: table
-      +dataset: chess_marts

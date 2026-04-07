@@ -1,0 +1,122 @@
+version: 2
+
+models:
+  - name: stg_games
+    description: "Parties Chess.com nettoyées et typées depuis raw_games"
+    columns:
+      - name: game_url
+        description: "URL unique de la partie — clé primaire naturelle"
+        tests:
+          - not_null
+          - unique
+
+      - name: username
+        description: "Username du joueur suivi"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - magnuscarlsen
+                  - hikaru
+                  - fabianocaruana
+                  - alireza2003
+                  - rpragchess
+
+      - name: time_class
+        description: "Format de jeu"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - rapid
+                  - blitz
+                  - bullet
+                  - daily
+
+      - name: player_color
+        description: "Couleur jouée par le joueur suivi"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - white
+                  - black
+
+      - name: player_result
+        description: "Résultat du joueur suivi"
+        tests:
+          - not_null
+
+      - name: player_rating
+        description: "Rating ELO du joueur suivi"
+        tests:
+          - not_null
+
+      - name: ended_at
+        description: "Timestamp de fin de partie"
+        tests:
+          - not_null
+
+      - name: white_rating
+        description: "Rating ELO du joueur blanc"
+        tests:
+          - not_null
+
+      - name: black_rating
+        description: "Rating ELO du joueur noir"
+        tests:
+          - not_null
+
+
+  - name: stg_players
+    description: "Profils et ratings des joueurs Chess.com nettoyés"
+    columns:
+      - name: username
+        description: "Username Chess.com — clé primaire naturelle"
+        tests:
+          - not_null
+          - unique
+
+      - name: player_id
+        description: "ID interne Chess.com"
+        tests:
+          - not_null
+          - unique
+
+      - name: title
+        description: "Titre FIDE du joueur"
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - GM
+                  - IM
+                  - FM
+                  - CM
+                  - NM
+                  - WGM
+                  - WIM
+                  - WFM
+                  - WCM
+
+      - name: country_code
+        description: "Code pays ISO"
+        tests:
+          - not_null
+
+      - name: rapid_rating
+        description: "Rating ELO Rapid"
+
+      - name: blitz_rating
+        description: "Rating ELO Blitz"
+
+      - name: bullet_rating
+        description: "Rating ELO Bullet"
+
+      - name: peak_rating
+        description: "Meilleur rating toutes catégories confondues"
+        tests:
+          - not_null
