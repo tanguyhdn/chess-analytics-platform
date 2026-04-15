@@ -1,0 +1,140 @@
+2026-04-15 23:48:51 — INFO — Running with edr=0.23.2
+2026-04-15 23:49:50 — INFO — Running with edr=0.23.2
+2026-04-15 23:49:51 — DEBUG — Profile 'elementary' not found in profiles.yml
+2026-04-15 23:49:51 — INFO — Installing packages for edr internal dbt package...
+2026-04-15 23:49:51 — INFO — Running dbt command --log-format json deps --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:49:58 — DEBUG — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_latest_invocation", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+[31;20m2026-04-15 23:49:59 — ERROR — Unable to get the latest invocation: Failed to run dbt command.
+Runtime Error
+  Could not find profile named 'elementary'[0m
+2026-04-15 23:49:59 — DEBUG — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_adapter_type_and_unique_id", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:49:59 — DEBUG — Could not get warehouse info.
+Traceback (most recent call last):
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\data_monitoring\data_monitoring.py", line 142, in _get_warehouse_info
+    self.internal_dbt_runner.run_operation(
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\command_line_dbt_runner.py", line 351, in run_operation
+    result = self._run_command(
+             ^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\command_line_dbt_runner.py", line 209, in _run_command
+    return self._inner_run_command_with_retries(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ulric\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ulric\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\command_line_dbt_runner.py", line 246, in _inner_run_command_with_retries
+    result = self._inner_run_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\api_dbt_runner.py", line 59, in _inner_run_command
+    raise DbtCommandError(
+elementary.exceptions.exceptions.DbtCommandError: Failed to run dbt command.
+Runtime Error
+  Could not find profile named 'elementary'
+2026-04-15 23:49:59 — DEBUG — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_elementary_database_and_schema", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+[31;20m2026-04-15 23:49:59 — ERROR — Failed to parse Elementary's database and schema.[0m
+2026-04-15 23:49:59 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_test_results", "macro_args": {"days_back": 7, "invocations_per_test": 720, "disable_passed_test_metrics": false}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+[31;20m2026-04-15 23:50:00 — ERROR — Could not generate the report - Error: Failed to run dbt command.
+Runtime Error
+  Could not find profile named 'elementary'
+Please reach out to our community for help with this issue.[0m
+Traceback (most recent call last):
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\api\report\report.py", line 84, in get_report_data
+    tests_api = TestsAPI(
+                ^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\api\tests\tests.py", line 52, in __init__
+    self.test_results_db_rows = self._get_test_results_db_rows(
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\api\tests\tests.py", line 64, in _get_test_results_db_rows
+    return self.tests_fetcher.get_all_test_results_db_rows(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\fetchers\tests\tests.py", line 26, in get_all_test_results_db_rows
+    run_operation_response = self.dbt_runner.run_operation(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\command_line_dbt_runner.py", line 351, in run_operation
+    result = self._run_command(
+             ^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\command_line_dbt_runner.py", line 209, in _run_command
+    return self._inner_run_command_with_retries(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ulric\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ulric\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\command_line_dbt_runner.py", line 246, in _inner_run_command_with_retries
+    result = self._inner_run_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\clients\dbt\api_dbt_runner.py", line 59, in _inner_run_command
+    raise DbtCommandError(
+elementary.exceptions.exceptions.DbtCommandError: Failed to run dbt command.
+Runtime Error
+  Could not find profile named 'elementary'
+2026-04-15 23:53:58 — INFO — Running with edr=0.23.2
+2026-04-15 23:54:00 — DEBUG — Resolved adapter type 'bigquery' for target 'dev'
+2026-04-15 23:54:00 — DEBUG — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_latest_invocation", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:13 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_latest_invocation", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 2579
+2026-04-15 23:54:13 — DEBUG — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_adapter_type_and_unique_id", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:15 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_adapter_type_and_unique_id", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 487
+2026-04-15 23:54:15 — INFO — edr (0.23.2) and Elementary's dbt package (0.23.0) are compatible.
+2026-04-15 23:54:15 — DEBUG — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_elementary_database_and_schema", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:16 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_elementary_database_and_schema", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 483
+2026-04-15 23:54:16 — INFO — Elementary's database and schema: 'chess-analytics-platform.chess_staging'
+2026-04-15 23:54:16 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_test_results", "macro_args": {"days_back": 7, "invocations_per_test": 720, "disable_passed_test_metrics": false}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:21 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_test_results", "macro_args": {"days_back": 7, "invocations_per_test": 720, "disable_passed_test_metrics": false}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 146637
+2026-04-15 23:54:21 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_source_freshness_results", "macro_args": {"days_back": 7, "invocations_per_test": 720}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:24 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_source_freshness_results", "macro_args": {"days_back": 7, "invocations_per_test": 720}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 403
+2026-04-15 23:54:24 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_seeds", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:26 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_seeds", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 403
+2026-04-15 23:54:26 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_snapshots", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:28 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_snapshots", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 403
+2026-04-15 23:54:28 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models", "macro_args": {"exclude_elementary": true}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:30 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models", "macro_args": {"exclude_elementary": true}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 7157
+2026-04-15 23:54:30 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_sources", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:33 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_sources", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 2185
+2026-04-15 23:54:33 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_exposures", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:35 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_exposures", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 403
+2026-04-15 23:54:35 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_singular_tests", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:38 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_singular_tests", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 403
+2026-04-15 23:54:38 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models_runs", "macro_args": {"days_back": 7, "exclude_elementary": true}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:40 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models_runs", "macro_args": {"days_back": 7, "exclude_elementary": true}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 30969
+2026-04-15 23:54:40 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_dbt_models_test_coverage", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:43 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_dbt_models_test_coverage", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 1705
+2026-04-15 23:54:43 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_tests", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:45 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_tests", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 79719
+2026-04-15 23:54:45 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_nodes_depends_on_nodes", "macro_args": {"exclude_elementary": true}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:47 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_nodes_depends_on_nodes", "macro_args": {"exclude_elementary": true}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 3329
+2026-04-15 23:54:47 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models_latest_invocation", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:49 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models_latest_invocation", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 8939
+2026-04-15 23:54:49 — INFO — Running dbt command --log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models_latest_invocations_data", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev
+2026-04-15 23:54:51 — DEBUG — Result bytes size for command '--log-format json run-operation elementary.log_macro_results --args {"macro_name": "elementary_cli.get_models_latest_invocations_data", "macro_args": {}} --project-dir D:\data-engineering-project\chess-analytics-platform\.venv\Lib\site-packages\elementary\monitor\dbt_project --profiles-dir C:\Users\ulric\.dbt --target dev' is 825

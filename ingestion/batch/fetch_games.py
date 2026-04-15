@@ -22,11 +22,10 @@ PLAYERS = [
     "magnuscarlsen",
     "hikaru",
     "fabianocaruana",
-    "alireza2003",
+    "firouzja2003",
     "rpragchess",
 ]
 
-# Mois à ingérer : les 3 derniers mois
 MONTHS = [
     ("2025", "01"),
     ("2025", "02"),
@@ -35,7 +34,6 @@ MONTHS = [
 
 TABLE_ID = f"{PROJECT_ID}.{DATASET}.raw_games"
 
-# ─── Client BigQuery ──────────────────────────────────
 client = bigquery.Client(project=PROJECT_ID)
 
 
@@ -44,7 +42,6 @@ def get_games(username: str, year: str, month: str) -> list:
     """Récupère les parties d'un joueur pour un mois donné."""
     url = f"https://api.chess.com/pub/player/{username}/games/{year}/{month}"
     headers = {"User-Agent": USER_AGENT}
-
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
@@ -97,25 +94,25 @@ def create_table_if_not_exists():
         bigquery.SchemaField("end_time",       "INTEGER"),
         bigquery.SchemaField("ingested_at",    "STRING"),
     ]
-
     table = bigquery.Table(TABLE_ID, schema=schema)
     table.clustering_fields = ["username", "time_class"]
-    table = client.create_table(table, exists_ok=True)
+    client.create_table(table, exists_ok=True)
     print(f"Table {TABLE_ID} prête.")
 
 
-def load_to_bigquery(rows: list, username: str, year: str, month: str):
-    """Charge les lignes dans BigQuery via load job (compatible free tier)."""
-    if not rows:
+def load_all_to_bigquery(all_rows: list):
+    """Charge toutes les lignes en un seul load job avec WRITE_TRUNCATE."""
+    if not all_rows:
+        print("Aucune ligne à charger.")
         return
 
-    # Écrit les lignes dans un fichier JSON temporaire
-    tmp_file = f"tmp_{username}_{year}_{month}.json"
+    tmp_file = "tmp_all_games.json"
     with open(tmp_file, "w") as f:
-        for row in rows:
+        for row in all_rows:
             f.write(json.dumps(row) + "\n")
 
-    # Load job vers BigQuery
+    print(f"\nChargement de {len(all_rows)} lignes en un seul job...")
+
     job_config = bigquery.LoadJobConfig(
         source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
         schema=[
@@ -139,10 +136,16 @@ def load_to_bigquery(rows: list, username: str, year: str, month: str):
 
     with open(tmp_file, "rb") as f:
         job = client.load_table_from_file(f, TABLE_ID, job_config=job_config)
-        job.result()  # Attend la fin du job
+        try:
+            job.result()
+            if job.errors:
+                print(f"  ERREURS JOB : {job.errors}")
+            else:
+                print(f"  ✓ Job terminé — état : {job.state}")
+        except Exception as e:
+            print(f"  EXCEPTION JOB : {e}")
 
-    os.remove(tmp_file)  # Nettoie le fichier temporaire
-    print(f"  {len(rows)} lignes chargées dans BigQuery.")
+    os.remove(tmp_file)
 
 
 # ─── Main ─────────────────────────────────────────────
@@ -151,17 +154,17 @@ def main():
 
     create_table_if_not_exists()
 
-    total = 0
+    all_rows = []
 
     for username in PLAYERS:
         print(f"\nJoueur : {username}")
         for year, month in MONTHS:
             games = get_games(username, year, month)
             rows  = [transform_game(g, username) for g in games]
-            load_to_bigquery(rows, username, year, month)
-            total += len(rows)
+            all_rows.extend(rows)
 
-    print(f"\n=== Terminé — {total} parties ingérées au total ===")
+    load_all_to_bigquery(all_rows)
+    print(f"\n=== Terminé — {len(all_rows)} parties ingérées au total ===")
 
 
 if __name__ == "__main__":

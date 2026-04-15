@@ -21,7 +21,7 @@ PLAYERS = [
     "magnuscarlsen",
     "hikaru",
     "fabianocaruana",
-    "alireza2003",
+    "firouzja2003",
     "rpragchess",
 ]
 
@@ -59,26 +59,26 @@ def get_player_stats(username: str) -> dict:
 
 def transform_player(profile: dict, stats: dict, username: str) -> dict:
     """Transforme profil + stats en ligne BigQuery-ready."""
-    chess_rapid = stats.get("chess_rapid", {}).get("last", {})
-    chess_blitz = stats.get("chess_blitz", {}).get("last", {})
+    chess_rapid  = stats.get("chess_rapid",  {}).get("last", {})
+    chess_blitz  = stats.get("chess_blitz",  {}).get("last", {})
     chess_bullet = stats.get("chess_bullet", {}).get("last", {})
 
     return {
-        "username":          username,
-        "player_id":         profile.get("player_id"),
-        "title":             profile.get("title"),
-        "name":              profile.get("name"),
-        "country":           profile.get("country", "").split("/")[-1],
-        "location":          profile.get("location"),
-        "followers":         profile.get("followers"),
-        "is_streamer":       profile.get("is_streamer", False),
-        "rapid_rating":      chess_rapid.get("rating"),
-        "blitz_rating":      chess_blitz.get("rating"),
-        "bullet_rating":     chess_bullet.get("rating"),
-        "rapid_games":       chess_rapid.get("rd"),
-        "blitz_games":       chess_blitz.get("rd"),
-        "bullet_games":      chess_bullet.get("rd"),
-        "ingested_at":       datetime.utcnow().isoformat(),
+        "username":      username,
+        "player_id":     profile.get("player_id"),
+        "title":         profile.get("title"),
+        "name":          profile.get("name"),
+        "country":       profile.get("country", "").split("/")[-1],
+        "location":      profile.get("location"),
+        "followers":     profile.get("followers"),
+        "is_streamer":   profile.get("is_streamer", False),
+        "rapid_rating":  chess_rapid.get("rating"),
+        "blitz_rating":  chess_blitz.get("rating"),
+        "bullet_rating": chess_bullet.get("rating"),
+        "rapid_games":   chess_rapid.get("rd"),
+        "blitz_games":   chess_blitz.get("rd"),
+        "bullet_games":  chess_bullet.get("rd"),
+        "ingested_at":   datetime.utcnow().isoformat(),
     }
 
 
@@ -135,12 +135,19 @@ def load_to_bigquery(rows: list):
             bigquery.SchemaField("bullet_games",  "INTEGER"),
             bigquery.SchemaField("ingested_at",   "STRING"),
         ],
-        write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+        write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
     )
 
     with open(tmp_file, "rb") as f:
         job = client.load_table_from_file(f, TABLE_ID, job_config=job_config)
-        job.result()
+        try:
+            job.result()
+            if job.errors:
+                print(f"  ERREURS JOB : {job.errors}")
+            else:
+                print(f"  ✓ Job terminé — état : {job.state}")
+        except Exception as e:
+            print(f"  EXCEPTION JOB : {e}")
 
     os.remove(tmp_file)
     print(f"  {len(rows)} joueurs chargés dans BigQuery.")
