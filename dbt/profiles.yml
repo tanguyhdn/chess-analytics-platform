@@ -1,0 +1,25 @@
+chess_analytics:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: chess-analytics-platform
+      dataset: chess_staging
+      threads: 4
+      timeout_seconds: 300
+      location: europe-west1
+      keyfile: /opt/airflow/credentials/service_account.json
+  target: dev
+
+elementary:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: chess-analytics-platform
+      dataset: chess_staging
+      threads: 4
+      timeout_seconds: 300
+      location: europe-west1
+      keyfile: /opt/airflow/credentials/service_account.json
+  target: dev

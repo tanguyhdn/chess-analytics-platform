@@ -45,3 +45,7 @@ desktop.ini
 .vscode/settings.json
 .idea/
 *.swp
+
+# Airflow logs
+orchestration/logs/*.log
+orchestration/logs/**/*.log

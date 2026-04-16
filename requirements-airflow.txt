@@ -1,0 +1,16 @@
+# Google Cloud
+google-cloud-bigquery==3.41.0
+
+# dbt
+dbt-bigquery==1.11.1
+
+# Great Expectations
+great-expectations==1.16.1
+
+# Elementary
+elementary-data[bigquery]==0.23.0
+
+# Utilitaires
+requests==2.33.1
+python-dotenv==1.2.2
+pandas==2.3.3
