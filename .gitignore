@@ -49,3 +49,7 @@ desktop.ini
 # Airflow logs
 orchestration/logs/*.log
 orchestration/logs/**/*.log
+
+# Elementary generated files
+dbt/chess_analytics/edr_target/
+dbt/chess_analytics/target/
