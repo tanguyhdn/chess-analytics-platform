@@ -89,7 +89,7 @@ with Airflow, data quality monitoring, and a deployed Streamlit dashboard.
 
 ## Dashboard
 
-> Live app : coming soon
+> 🔗 Live app : https://chess-analytics-platform-ad9rpmjfvhqwmfmkejosxs.streamlit.app/
 
 Built with Streamlit, connected to BigQuery marts.
 Covers player ELO progression, opening win rates, game length distribution,
